@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # Ejercicio 1 Rumba
 
 ## Planteamiento
