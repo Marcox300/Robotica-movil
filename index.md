@@ -1,4 +1,6 @@
-
+---
+layout: default
+---
 
 Bienvenido a los ejercicios de Robótica Móvil
 
