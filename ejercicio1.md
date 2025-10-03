@@ -23,4 +23,4 @@ Por su parte necesito una W menor a 1 para mantener la velocidad razonable. Por 
 1. Por cada vuelta girar 90º desplazarse un poco hacia delante y deshacer el giro. No quise implementar el guiado del giro al no contar con precisión según se especifica en el ejercicio.
 2. Aumentar el radio por cada tick.
 Esta última opción fue la que escogí.
-Simplemente razonando que modificamos *W* y ajustamos los valores iniciales para que la velocidad no sea mayor a la estipulada de 1. Por último simplemente adaptamos esta fórmula al programa y obtenemos la solución:  R = *V/W R0 = V/W0 W = V / R_NEW R_NEW = R_LAST + K/*/T*  siendo K una proporción a ajustar y T el contador de Ticks como en mi caso es 1 la T se puede omitir. 
+Simplemente razonando que modificamos *W* y ajustamos los valores iniciales para que la velocidad no sea mayor a la estipulada de 1. Por último simplemente adaptamos esta fórmula al programa y obtenemos la solución:  *R = V/W*   *R0 = V/W0*   *W = V / R_NEW*   *R_NEW = R_LAST + K***T* siendo K una proporción a ajustar y T el contador de Ticks como en mi caso es 1 la T se puede omitir. 
