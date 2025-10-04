@@ -35,3 +35,10 @@ Simplemente razonando que modificamos *W* y ajustamos los valores iniciales para
 *R_NEW = R_LAST + K* * *T*
 
 siendo K una proporción a ajustar y T el contador de Ticks como en mi caso es 1 la T se puede omitir. 
+
+# Video
+
+<video width="640" height="360" controls>
+  <source src="RobMov_ej1.mp4" type="video/mp4">
+  Tu navegador no soporta el video.
+</video>
