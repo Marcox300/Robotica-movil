@@ -1,4 +1,4 @@
-# Ejercicio 2----Siguelíneas y PID
+# Ejercicio 2---Siguelíneas y PID
 
 ## Planteamiento
 El objetivo de este ejercicio es crear un programa que controle un fórmula 1 de tal forma que siga una línea roja. La correcta implementación debe tener mecanismos de recuperación,
@@ -65,3 +65,15 @@ Lo considero aceptable al no perder demasiado tiempo y al considerar que la velo
   <source src="video/p2_v3.mp4" type="video/mp4">
   Tu navegador no soporta el video.
 </video>
+
+### 4. Nurburgring Circuit
+En general lo realiza bien pero en algunos instantes se aprecian pérdidas. En la primera curva por lo pronunciada que es y la velocidad del vehículo se pierde un instante.
+
+<video width="640" height="360" controls>
+  <source src="video/p2_v4.mp4" type="video/mp4">
+  Tu navegador no soporta el video.
+</video>
+
+## Circuitos Ackermann
+En estos circuitos no funciona debido a las velocidades en el simulador, al ser distintas de los simples lo que provoca que el giro del PID W este descompensado y el PID de V parezca lento.
+El giro adaptado a altas velocidades genera sobreoscilación que crece. También denotar que he probado aumentar en gran medida la velocidad de V, pero esto parece no afectar, como si no tuviese apenas agarre las ruedas.
