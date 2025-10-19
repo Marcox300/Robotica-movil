@@ -1,4 +1,4 @@
-# Ejercicio 2 Siguelíneas y PID
+# Ejercicio 2----Siguelíneas y PID
 
 ## Planteamiento
 El objetivo de este ejercicio es crear un programa que controle un fórmula 1 de tal forma que siga una línea roja. La correcta implementación debe tener mecanismos de recuperación,
