@@ -4,7 +4,7 @@
 El objetivo de este ejercicio es crear un programa que controle un formula 1 de tal forma que siga una linea roja. La corecta implemetación debe tener mecanismos de recuperación,
 un PID que reguel V y W lo más optimo posible y una versatilidad en varios circuitos.
 
-### Desarrollo
+## Desarrollo
 A la hora de realizar este ejercicio lo primero que implemente es un filtrado de la imagen con openCV de tal forma que obtenía el error en el eje x respecto al centro de la imagen.
 Este error lo obtengo del centro de todos los puntos rojos. Tambien le puse un margen donde la velocidad devería ser solo V.
 
