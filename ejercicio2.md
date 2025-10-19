@@ -38,7 +38,7 @@ Como apunte mencionar que el resultado del PID es bastante preciso pero los prob
 cuando se pierde la imagen no se muestra nada pero se mantiene la velocidad) y tiene un poco de ocilación al recuperar de curva arecta pero apenas se aleja de la línea roja.
 
 ### 1. Simple Circuit
-Es el circuito que mejor funciona entre que el simulador corre mejor y que es donde se optimizó el PID
+Es el circuito que mejor funciona entre que el simulador corre mejor y que es donde se optimizó el PID. Tiempo entre 25-27 segundos
 
 <video width="640" height="360" controls>
   <source src="video/p2_v1.mp4" type="video/mp4">
