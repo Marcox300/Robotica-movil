@@ -76,4 +76,4 @@ En general lo realiza bien pero en algunos instantes se aprecian pérdidas. En l
 
 ## Circuitos Ackermann
 En estos circuitos no funciona debido a las velocidades en el simulador, al ser distintas de los simples lo que provoca que el giro del PID W este descompensado y el PID de V parezca lento.
-El giro adaptado a altas velocidades genera sobreoscilación que crece. También denotar que he probado aumentar en gran medida la velocidad de V, pero esto parece no afectar, como si no tuviese apenas agarre las ruedas.
+El giro adaptado a altas velocidades genera sobreoscilación que crece. También denotar que he probado aumentar en gran medida la velocidad de V, pero esto parece no afectar, como si no tuviesen apenas agarre las ruedas.
