@@ -39,6 +39,6 @@ siendo K una proporción a ajustar y T el contador de Ticks como en mi caso es 1
 # Video
 
 <video width="640" height="360" controls>
-  <source src="RobMov_ej1.mp4" type="video/mp4">
+  <source src="video/RobMov_ej1.mp4" type="video/mp4">
   Tu navegador no soporta el video.
 </video>
