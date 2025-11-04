@@ -3,7 +3,7 @@
 # Planteamiento
 Programa un coche de Fórmula1, equipado con un sensor laser y un sensor GPS, para que recorra un circuito de carreras con valla en los laterales y con otros coches como obstáculos a lo largo del recorrido.
 
-# Desarrollo
+# 1. Desarrollo
 
 Para abordar este ejercicio se desarrollaron varios módulos que trabajan de forma conjunta. El flujo general del programa se basa en:
 
@@ -14,13 +14,13 @@ Para abordar este ejercicio se desarrollaron varios módulos que trabajan de for
 5. Fusionar ambos vectores para obtener el vector resultante de movimiento.
 6. Aplicar control sobre las componentes X e Y para generar velocidades V y W.
 
-## El módulo **vectorial** 
+## 1.1 El módulo **vectorial** 
 Es el encargado de generar las fuerzas proporcionales que guían el movimiento del robot.
 
-## La fuerza atractiva
+## 1.1.1 La fuerza atractiva
 Se calcula aplicando la matriz de transformación sobre la posición objetivo y obteniendo un módulo que determina la distancia máxima hacia el punto deseado.
 
-## La fuerza repulsiva 
+## 1.1.2 La fuerza repulsiva 
 Transforma las mediciones del LiDAR en ángulos y, posteriormente, invierte sus valores para representar la dirección opuesta al obstáculo.
 En este proceso se toma como referencia la distancia medida y se aplica la expresión exponencial
 $$
@@ -41,7 +41,7 @@ También se muestra el rango aproximado en el que actúa la repulsión.
 Al usar una función exponencial, el coche puede acercarse más a los muros sin que la fuerza crezca demasiado rápido.
 Gracias a esto, puede seguir una trazada más natural y mantener mayor velocidad en zonas donde no hay peligro de colisión.
 
-## La fusión de fuerzas
+## 1.1.3 La fusión de fuerzas
 El objetivo es generar un vector que define la dirección y la velocidad del movimiento.
 
 
