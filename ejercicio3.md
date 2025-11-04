@@ -14,7 +14,8 @@ Para abordar este ejercicio se desarrollaron varios módulos que trabajan de for
 5. Fusionar ambos vectores para obtener el vector resultante de movimiento.
 6. Aplicar control sobre las componentes X e Y para generar velocidades V y W.
 
-## El módulo **vectorial** se encarga de generar fuerzas proporcionales que guían el movimiento del robot.
+## El módulo **vectorial** 
+Es el encargado de generar las fuerzas proporcionales que guían el movimiento del robot.
 
 ## La fuerza atractiva
 Se calcula aplicando la matriz de transformación sobre la posición objetivo y obteniendo un módulo que determina la distancia máxima hacia el punto deseado.
