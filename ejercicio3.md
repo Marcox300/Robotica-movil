@@ -33,7 +33,9 @@ $$
 - `fac`: factor angular dependiente del ángulo del rayo LiDAR, que aumenta la influencia de los obstáculos situados frente al robot.
 
 Con esta última variable (`fac`) podemos regular la influencia de los muros y obstaculos laterales.
+
 ![Efecto del parámetro fac](img/car.png)
+
 En la imagen se puede ver que el área de influencia de la fuerza repulsiva se ha definido según la distancia entre el centro de la carretera y los muros.
 También se muestra el rango aproximado en el que actúa la repulsión.
 Al usar una función exponencial, el coche puede acercarse más a los muros sin que la fuerza crezca demasiado rápido.
