@@ -24,9 +24,7 @@ Se calcula aplicando la matriz de transformación sobre la posición objetivo y 
 Transforma las mediciones del LiDAR en ángulos y, posteriormente, invierte sus valores para representar la dirección opuesta al obstáculo.
 En este proceso se toma como referencia la distancia medida y se aplica la expresión exponencial
 
-$$
-\text{mag} = A \cdot e^{-k \cdot \frac{\text{dist}}{\text{fac}}}
-$$
+`mag = A * exp(-k * (dist / fac))`
 
 - `mag`: magnitud de la fuerza repulsiva resultante.  
 - `A`: factor de escala que ajusta la intensidad máxima de la fuerza.  
