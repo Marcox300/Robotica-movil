@@ -129,4 +129,9 @@ El aumento de coste alrededor de vallas se ajustó para evitar caminos demasiado
 
 ## 6. Resultado
 
-poner video
+<video width="640" height="360" controls>
+  <source src="video/p4_gpp.mp4" type="video/mp4">
+  Tu navegador no soporta el video.
+</video>
+
+En el video se comprueba que independientemente del estado del robot se puede asignar otro punto objetivo así como se garantiza que funcióna el movimiento.
