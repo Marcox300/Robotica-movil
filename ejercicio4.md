@@ -70,7 +70,8 @@ Portanto aunque el circulo representa una geometría más natural en radios pequ
 
 ![Manhattan](img/gpp3.png)
 
-En conclusión se uso el rombo como forma de analizar el perímetro.
+
+En conclusión, para este ejercicio se ha decidido usar el rombo al ser opción más fiable en mapas discretos.
 
 
 ### 2.2 Selección del mejor candidato
