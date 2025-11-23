@@ -44,7 +44,7 @@ Hay que tener en cuenta la importancia de selecionar un radio adecuado, si es mu
 En un mundo cuadricular la selección de la figura influye directamente en la eficiencia del algoritmo.
 En el proceso planteé dos formas:
 
-1. Perímetro cuadrado (max(|dx|, |dy|) = R)
+- Perímetro cuadrado max(|dx|, |dy|) = R
 
 Se obtienen todas las celdas a distancia Chebyshev del robot.
 
@@ -55,7 +55,7 @@ Incluye diagonales más alejadas en la misma capa lo que puede generar candidato
 Como se aprecia en la imagen, aunque la ruta lleve al objetivo, se generan movimientos inecesarios entrando a calles.
 Esto es debido a que el movimiento basado en la distancia de Chebyshev se usa cuando quieres que todas las direcciones cuesten lo mismo.
 
-2. Perímetro en rombo (|dx| + |dy| = R)
+- Perímetro en rombo |dx| + |dy| = R
 
 Usa distancia Manhattan. Todas las celdas están basadas en distancia real lo que produce rutas más naturales.
 
@@ -63,9 +63,15 @@ Usa distancia Manhattan. Todas las celdas están basadas en distancia real lo qu
 
 El rombo representa una expansión uniforme donde cada movimiento está a la distancia efectiva del robot.
 
+- El círculo
+
+En una cuadrícula, un círculo tiene muy pocos puntos, especialmente para radios pequeños. Para mejorar esto hay que engordar el anillo probocando un rombo distorsionado.
+Portanto aunque el circulo representa una geometría más natural en radios pequeños es menos efectivo que el rombo como se ve en:
+
+![Manhattan](img/gpp3.png)
+
 En conclusión se uso el rombo como forma de analizar el perímetro.
 
-El circular no es el mejor pasa similar al Chebyshev
 
 ### 2.2 Selección del mejor candidato
 
