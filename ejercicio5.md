@@ -88,6 +88,25 @@ como la estantería central, en relación con la posición real del robot.
 
 ![Odom3](img/p5_odom3.png)
 
+# 5. Mapa grande.
+En entornos muy grandes, el cálculo de rutas con el algoritmo A* puede volverse costoso, especialmente cuando debe evaluar muchas posiciones para llegar a zonas desconocidas.
+
+Por esta razón, no se ha completado una muestra del mapa grande, ya que el sistema se queda colgado durante el cálculo de la ruta.
+
+Esto evidencia una limitación práctica del enfoque actual y sugiere que, para mapas de gran tamaño, sería necesario optimizar la planificación de rutas o usar técnicas de búsqueda más eficientes.
+
+## Sugerencia de mejora con nodos agrupados
+
+- Dividir el mapa en conjuntos de nodos(cuadrados de nxn pixeles), donde cada nodo está enlazado con sus vecinos a 0°, 90°, 180° y -90°.  
+- Planificar la ruta inicial sobre estos conjuntos, priorizando aquellos que sean accesibles y contengan un **porcentaje significativo de pixeles desconocidos**.  
+- Realizar barridos por conjuntos evitando giros innecesarios.  
+- La ruta se actualiza dinámicamente al encontrar paredes u obstáculos, asegurando que siempre se explore zonas desconocidas y accesibles.  
+
+Beneficios de esta estrategia:
+
+- Reducir el coste computacional de la planificación de rutas en mapas grandes.  
+- Evitar bucles infinitos o cálculos excesivos.  
+- Garantizar que la **exploración sea completa y eficiente** incluso en entornos amplios.
 
 # Video
 En el video se aprecia el barrido y el funcionamiento del caso de escapar de una situación dificil mientras busca zonas no exploradas.
