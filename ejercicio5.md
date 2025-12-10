@@ -47,3 +47,4 @@ Este enfoque combinado garantiza que el robot pueda cubrir todo el entorno de ma
 El algoritmo A* puede dar problemas en la escalabilidad, es por esto que he tenido que limitarlo. Esto se debe a que la ruta tiene que garantizar que puede pasar el robot almenos en las zonas ya mapeadas.
 
 # Observaciones y pruebas
+
