@@ -74,4 +74,9 @@ Al principio se permitieron movimientos diagonales dentro del algoritmo de búsq
 
 ![Busqueda](img/p5_search2.png)
 
+# Video
 
+<video width="640" height="360" controls>
+  <source src="video/p5.mp4" type="video/mp4">
+  Tu navegador no soporta el video.
+</video>
