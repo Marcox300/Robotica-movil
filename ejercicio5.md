@@ -63,7 +63,7 @@ Inicialmente, el robot solo implementaba el barrido automático con un mecanismo
 
 Esto permitió cubrir parte del entorno, pero dejaba zonas inaccesibles o no exploradas, lo que motivó la incorporación de la estrategia de búsqueda de zonas desconocidas.
 
-# 3. Movimientos posibles en ** A* **
+# 3. Movimientos posibles en A*
 Al principio se permitieron movimientos diagonales dentro del algoritmo de búsqueda A*, lo que otorgaba mayor libertad y rutas más cortas, pero aumentaba la posibilidad de errores acumulativos debido a la odometría, especialmente en entornos grandes:
 
 - Imagen 1: Movilidad completa hacia celdas adyacentes y diagonales. La ruta planificada (verde) puede desviarse respecto a la posición estimada (azul) si hay errores en la odometría.
