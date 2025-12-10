@@ -74,6 +74,21 @@ Al principio se permitieron movimientos diagonales dentro del algoritmo de búsq
 
 ![Busqueda](img/p5_search2.png)
 
+# 4. Odom 2 y 3
+El rendimiento del mapeo depende en gran medida de la precisión de la autolocalización. Al usar sistemas con mayor ruido, como HAL.getOdom2 y HAL.getOdom3, se observan efectos significativos en el mapa:
+
+- ```Odom2```: Las dos primeras imágenes muestran cómo la imprecisión de la odometría distorsiona el mapa, sobreescribiendo posiciones correctas de obstáculos,
+como la estantería central, en relación con la posición real del robot.
+
+![Odom2](img/p5_odom2_1.png)
+
+![Odom2](img/p5_odom2_2.png)
+
+- ```Odom3```: Con aún mayor ruido, los errores se acentúan y el mapa se vuelve menos confiable, mostrando deformaciones más grandes.
+
+![Odom3](img/p5_odom3.png)
+
+
 # Video
 En el video se aprecia el barrido y el funcionamiento del caso de escapar de una situación dificil mientras busca zonas no exploradas.
 
