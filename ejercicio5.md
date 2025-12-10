@@ -68,13 +68,14 @@ Al principio se permitieron movimientos diagonales dentro del algoritmo de búsq
 
 - Imagen 1: Movilidad completa hacia celdas adyacentes y diagonales. La ruta planificada (verde) puede desviarse respecto a la posición estimada (azul) si hay errores en la odometría.
 
-- Imagen 2: Movimientos restringidos a las 4 celdas adyacentes (0,1), (1,0), (0,-1), (-1,0). La línea verde y la azul se mantienen juntas, reduciendo desviaciones y haciendo el seguimiento más robusto, aunque limitando la flexibilidad de la ruta.
+- Imagen 2: Movimientos restringidos a las 4 celdas adyacentes (0,1), (1,0), (0,-1), (-1,0). La línea verde y la azul se mantienen juntas, reduciendo desviaciones y haciendo el seguimiento más robusto, aunque limitando la flexibilidad de la ruta. Tambien se aprecia que se usa un mayor movimiento en la secuencia de desplazamiento de barrido lo que optimiza esta función.
 
 ![Busqueda](img/p5_search1.png)
 
 ![Busqueda](img/p5_search2.png)
 
 # Video
+En el video se aprecia el barrido y el funcionamiento del caso de escapar de una situación dificil mientras busca zonas no exploradas.
 
 <video width="640" height="360" controls>
   <source src="video/p5.mp4" type="video/mp4">
