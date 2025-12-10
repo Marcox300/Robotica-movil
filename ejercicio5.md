@@ -47,4 +47,31 @@ Este enfoque combinado garantiza que el robot pueda cubrir todo el entorno de ma
 El algoritmo A* puede dar problemas en la escalabilidad, es por esto que he tenido que limitarlo. Esto se debe a que la ruta tiene que garantizar que puede pasar el robot almenos en las zonas ya mapeadas.
 
 # Observaciones y pruebas
+Los puntos del 1 al 3 se explican con Odom normal.
+
+## 1. Precisión
+En este proyecto se observó que mayor margen de error en el giro y velocidades altas pueden provocar desviaciones en la posición estimada, generando inconsistencias en el algoritmo de barrido y arrastrando un mayor error.
+
+![AUTO_PUEBA](img/p5_auto_prueba.png)
+
+## 2. Barrido automático
+Inicialmente, el robot solo implementaba el barrido automático con un mecanismo de escape basado en un giro de 180°. Sin la búsqueda de zonas desconocidas, los resultados fueron:
+
+![AUTO_PUEBA](img/p5_auto_1.png)
+
+![AUTO_PUEBA](img/p5_auto_2.png)
+
+Esto permitió cubrir parte del entorno, pero dejaba zonas inaccesibles o no exploradas, lo que motivó la incorporación de la estrategia de búsqueda de zonas desconocidas.
+
+# 3. Movimientos posibles en ** A* **
+Al principio se permitieron movimientos diagonales dentro del algoritmo de búsqueda A*, lo que otorgaba mayor libertad y rutas más cortas, pero aumentaba la posibilidad de errores acumulativos debido a la odometría, especialmente en entornos grandes:
+
+- Imagen 1: Movilidad completa hacia celdas adyacentes y diagonales. La ruta planificada (verde) puede desviarse respecto a la posición estimada (azul) si hay errores en la odometría.
+
+- Imagen 2: Movimientos restringidos a las 4 celdas adyacentes (0,1), (1,0), (0,-1), (-1,0). La línea verde y la azul se mantienen juntas, reduciendo desviaciones y haciendo el seguimiento más robusto, aunque limitando la flexibilidad de la ruta.
+
+![Busqueda](img/p5_search1.png)
+
+![Busqueda](img/p5_search2.png)
+
 
