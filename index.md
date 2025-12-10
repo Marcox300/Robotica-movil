@@ -9,4 +9,4 @@ Bienvenido a los ejercicios de Robótica Móvil
 
 - [Ejercicio 4](ejercicio4.md)
 
-- [Ejercicio 4](ejercicio5.md)
+- [Ejercicio 5](ejercicio5.md)
