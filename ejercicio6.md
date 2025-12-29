@@ -11,9 +11,8 @@ y combinar esta información con odometría para mantener la pose estimada inclu
   Usamos el código de ejemplo para detectar los tag. Tras esto analizamos su tamaño y escogemos al más grande.
 
 2. Cálculo de la cámara:
-- Estado 0 –
   Se define la matriz de cámara usando la distancia focal (`focal_length`) y el centro de la imagen.  
-  `focal_length` se calcula como una proporción del ancho de la imagen (`size[1] * 0.87`) y representa la distancia focal de la cámara en píxeles,
+  `focal_length` se calcula como una proporción del ancho de la imagen (`size[1] * 0.87` en este caso) y representa la distancia focal de la cámara en píxeles,
   necesaria para proyectar correctamente los puntos 3D del tag a coordenadas 2D de imagen.
 
 3. Resolución del PnP (Perspective-n-Point):
