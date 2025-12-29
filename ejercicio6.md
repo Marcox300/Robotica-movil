@@ -28,9 +28,9 @@ y combinar esta información con odometría para mantener la pose estimada inclu
      - Y_robot = -X_cámara  
      - Z_robot = 0 (ignoramos la altura)
 
-   > **Nota:** estos fuernon calculados a mano por simplicidad en el ejercicio.
+   > **Nota:** estos fueron calculados a mano por simplicidad en el ejercicio.
 
-   tras esto calculamos matriz de rotación robot->cámara.
+   Tras esto calculamos matriz de rotación robot->cámara.
    Con estas matrices calculamos Matriz rotacion robot->mapa = tag->mapa * robot->camara * camara->tag. Tras esto calculamos matriz rotación traslación robot->map añadiendo la traslación.
    Finalmente, la pose absoluta del robot en el mapa se representa con la matriz de rotación y traslación 4x4 `RT_robot_map`, de la cual se extraen la posición `(x_est, y_est)` y orientación `yaw_est`.
    > **Nota:** `yaw_est` es calculada directamente de  Matriz rotacion robot->mapa por simplicidad.
@@ -45,10 +45,10 @@ y combinar esta información con odometría para mantener la pose estimada inclu
    Finalmente sumamos el incremento a la posición anterior estimada.
 
 Como posibles mejoras:
-- Filtrado de mediciones erráticas: se debería añadir un fliltro que desestime calculos muy diferentes en visión.
+- Filtrado de mediciones erráticas: se debería añadir un filtro que desestime calculos muy diferentes en visión.
 
 - Fusión de sensores: en la propia visión se podría añadir una mezcla entre odometria y visión.
-  Esto no se a aplicado por la precisión actual que obtenemos en visión, solo usamos odom ante cadencias de marcas.
+  Esto no se ha aplicado por la precisión actual que obtenemos en visión, solo usamos odom ante cadencias de marcas.
 
 - Reconocimiento de múltiples tags: en lugar de usar solo el tag más grande, promediar posiciones de varios tags detectados para mejorar la precisión.
 
