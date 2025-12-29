@@ -65,4 +65,25 @@ Se selecciona un ángulo de giro aleatorio dentro de un rango máximo permitido.
 - Estado 2 --- Girando:
 El robot rota hacia la orientación objetivo calculada. El giro es proporcional a la diferencia entre la orientación actual y la deseada, de modo que se ajuste suavemente. Cuando alcanza el ángulo objetivo dentro de un umbral de tolerancia, vuelve al estado de avance.
 
-# Video
+# Videos
+
+Aqui se puede ver el funcionamiento:
+> **Nota:** el primer video ODOM sale como INFO.
+
+<video width="640" height="360" controls>
+  <source src="video/p6_move1.webm" type="video/webm">
+  Tu navegador no soporta el video.
+</video>
+
+<video width="640" height="360" controls>
+  <source src="video/p6_move2.webm" type="video/webm">
+  Tu navegador no soporta el video.
+</video>
+
+En este video se aprecia cómo la distancia afecta a la precisión, se aprecia que a partir del 0:54 la estela roja que deja empieza a disminuir el ruido al acercarse al tag.
+Pero antes de perder al tag en el 1:10 se aprecia un salto causado por el ángulo de la cámara con el tag.
+
+<video width="640" height="360" controls>
+  <source src="video/p6_ruido.webm" type="video/webm">
+  Tu navegador no soporta el video.
+</video>
