@@ -86,3 +86,256 @@ Pero antes de perder al tag en el 1:10 se aprecia un salto causado por el ángul
   <source src="video/p6_ruido.webm" type="video/webm">
   Tu navegador no soporta el video.
 </video>
+
+---
+```python
+import WebGUI
+import HAL
+import Frequency
+import pyapriltags
+import cv2
+import numpy as np
+import math
+import yaml
+from pathlib import Path
+import random
+# Enter sequential code!
+
+MIN_RANGE_LASER = 0.2
+TAG_SIZE = 0.24
+
+MAX_TURN_RAD = math.radians(170)
+MAX_W = 0.5
+STOP_ANGLE_RAD = math.radians(10)
+
+# tags
+conf = yaml.safe_load(
+    Path("/resources/exercises/marker_visual_loc/apriltags_poses.yaml").read_text()
+)
+tags = conf["tags"]
+
+obj_points = np.array([
+    [-TAG_SIZE/2, -TAG_SIZE/2, 0],
+    [ TAG_SIZE/2, -TAG_SIZE/2, 0],
+    [ TAG_SIZE/2,  TAG_SIZE/2, 0],
+    [-TAG_SIZE/2,  TAG_SIZE/2, 0]
+], dtype=np.float32)
+detector = pyapriltags.Detector(searchpath=["apriltags"], families="tag36h11")
+
+# pose
+odom_last = None
+pos_est = None
+
+# states
+# 0 = forward
+# 1 = calculate turn
+# 2 = turn
+state = 0
+turn_direction = 1
+target_yaw = 0
+print("[STATE 0] Avanzando")
+
+# ----------------------- move -----------------------
+
+def front_obstacle(laser_data, threshold=1):
+    front_angles = list(range(350, 360)) + list(range(0, 11))
+
+    for i in front_angles:
+        dist = laser_data.values[i]
+        if MIN_RANGE_LASER < dist < threshold:
+            return True
+    return False
+
+def angle_diff(a, b):
+    diff = (a - b + math.pi) % (2 * math.pi) - math.pi
+    return diff
+
+def move_car(vel, turn):
+    HAL.setV(vel)
+    HAL.setW(turn)
+
+# ----------------------- main -----------------------
+while True:
+    odom = HAL.getOdom()
+    laser_data = HAL.getLaserData() 
+
+    #print("[INFO] loading image...")
+    image = HAL.getImage()
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    size = image.shape
+    focal_length = size[1] * 0.87
+    # print(focal_length)
+    center = (size[1] / 2, size[0] / 2)
+    camera_matrix = np.array([
+        [focal_length, 0, center[0]],
+        [0, focal_length, center[1]],
+        [0, 0, 1]
+    ], dtype="double")
+    dist_coeffs = np.zeros((4,1))
+
+    # print("[INFO] detecting AprilTags...")
+    results = detector.detect(gray)
+    # print("[INFO] {} total AprilTags detected".format(len(results)))
+    tag_info = []
+
+    # loop over the AprilTag detection results
+    for r in results:
+        # extract the bounding box (x, y)-coordinates for the AprilTag
+        # and convert each of the (x, y)-coordinate pairs to integers
+        (ptA, ptB, ptC, ptD) = r.corners
+        ptB = (int(ptB[0]), int(ptB[1]))
+        ptC = (int(ptC[0]), int(ptC[1]))
+        ptD = (int(ptD[0]), int(ptD[1]))
+        ptA = (int(ptA[0]), int(ptA[1]))
+        # draw the bounding box of the AprilTag detection
+        cv2.line(image, ptA, ptB, (0, 255, 0), 2)
+        cv2.line(image, ptB, ptC, (0, 255, 0), 2)
+        cv2.line(image, ptC, ptD, (0, 255, 0), 2)
+        cv2.line(image, ptD, ptA, (0, 255, 0), 2)
+        # draw the center (x, y)-coordinates of the AprilTag
+        (cX, cY) = (int(r.center[0]), int(r.center[1]))
+        cv2.circle(image, (cX, cY), 5, (0, 0, 255), -1)
+        # draw the tag family on the image
+        tagFamily = r.tag_family.decode("utf-8")
+        cv2.putText(
+            image,
+            tagFamily,
+            (ptA[0], ptA[1] - 15),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (0, 255, 0),
+            2,
+        )
+        xs = [p[0] for p in r.corners]
+        ys = [p[1] for p in r.corners]
+        area = (max(xs) - min(xs)) * (max(ys) - min(ys))
+        tag_info.append((r.tag_id, area, r))
+        # print("[INFO] tag family: {}".format(tagFamily))
+        # print(f"[INFO] tag ID {r.tag_id}")
+
+    WebGUI.showImage(image)
+    if len(tag_info) > 0:
+
+        # obtenemos el tag más grande
+        tag_id, _, r = max(tag_info, key=lambda x: x[1])
+        tag_name = f"tag_{tag_id}"
+
+        if tag_name in tags:
+            x_real, y_real, z_real, yaw_real = tags[tag_name]["position"]
+            # print(f"[TAG REAL] X: {x_real:.2f}, Y: {y_real:.2f}, Z: {z_real:.2f}, Yaw: {yaw_real:.2f}")
+            img_points = np.array(r.corners, dtype=np.float32)
+
+            ok, rvec, tvec = cv2.solvePnP(
+                obj_points,
+                img_points,
+                camera_matrix,
+                dist_coeffs
+            )
+
+            if ok:
+                # Rotation matrix and translation vector tag -> camera
+                R_ct, _ = cv2.Rodrigues(rvec)
+                t_ct = tvec
+
+                # Convert from tag -> camera to camera -> tag
+                R_tc = R_ct.T
+                t_tc = -R_tc @ t_ct
+
+                # Rotation-translation matrix of the tag in the map
+                x_t, y_t, z_t, yaw_t = tags[tag_name]["position"]
+                c = math.cos(yaw_t)
+                s = math.sin(yaw_t)
+                RT_tag_map = np.array([
+                    [ c, -s, 0, x_t],
+                    [ s,  c, 0, y_t],
+                    [ 0,  0, 1, z_t],
+                    [ 0,  0, 0, 1  ]
+                ])
+
+                # Translation vector camera -> robot
+                # We assume the camera is the robot
+                t_robot = np.zeros(3)
+                t_robot[0] = -t_tc[2]    # X robot = -Z camera
+                t_robot[1] = -t_tc[0]    # Y robot = -X camera
+                t_robot[2] = 0            # Z robot = 0, ignore height
+
+                # Rotation matrix robot -> camera
+                R_robot_cam = np.array([
+                    [1, 0, 0],  # X_robot
+                    [0, 0, -1],   # Y_robot
+                    [0, 1, 0]   # Z_robot
+                ])
+
+                # Rotation matrix robot -> map =
+                # tag->map (rotation only) * robot->tag
+                # robot->tag = robot->camera * camera->tag
+                # robot -> camera -> tag -> map
+                R_robot_map = RT_tag_map[:3, :3] @ R_robot_cam @ R_tc
+                # print(R_robot_map)
+
+                # Rotation-translation matrix robot -> map
+                RT_robot_map = np.eye(4)
+                RT_robot_map[:3, :3] = R_robot_map
+                RT_robot_map[:3, 3] = RT_tag_map[:3, 3] + RT_tag_map[:3, :3] @ t_robot
+
+                # Final position and orientation
+                x_est = RT_robot_map[0, 3]
+                y_est = RT_robot_map[1, 3]
+                # For orientation we directly use the rotation matrix
+                yaw_est = math.atan2(R_robot_map[1, 0], R_robot_map[0, 0])
+
+                pos_est = (x_est, y_est, yaw_est)
+
+                WebGUI.showEstimatedPose(pos_est)
+                print(f"[VISION] X: {x_est:.2f}, Y: {y_est:.2f}, Yaw: {yaw_est:.2f}")
+
+    else:
+        # No vision available, use odometry
+        if pos_est is not None and odom_last is not None:
+            dx = odom.x - odom_last.x
+            dy = odom.y - odom_last.y
+            dyaw = odom.yaw - odom_last.yaw
+
+            x_est, y_est, yaw_est = pos_est
+            x_est += dx
+            y_est += dy
+            yaw_est += dyaw
+
+            pos_est = (x_est, y_est, yaw_est)
+
+            WebGUI.showEstimatedPose(pos_est)
+            print(f"[ODOM] Posición estimada = X: {pos_est[0]:.2f}, Y: {pos_est[1]:.2f}, Yaw: {pos_est[2]:.2f}")
+
+    odom_last = odom
+
+
+    match state:
+        case 0:
+            if front_obstacle(laser_data, threshold=1):
+                move_car(0, 0)
+                state = 1
+                print("[STATE 1] Obstáculo detectado")
+            else:
+                move_car(0.5, 0)
+
+        case 1:
+            delta_yaw = random.uniform(-MAX_TURN_RAD, MAX_TURN_RAD)
+            target_yaw = (odom.yaw + delta_yaw) % (2 * math.pi)
+            state = 2
+            print(f"[STATE 2] Giro aleatorio: {math.degrees(delta_yaw):.1f}°")
+
+        case 2:
+            diff = angle_diff(target_yaw, odom.yaw)
+
+            if abs(diff) < STOP_ANGLE_RAD:
+                move_car(0, 0)
+                state = 0
+                print("[STATE 0] Avanzando")
+            else:
+                w = max(-MAX_W, min(MAX_W, 1.0 * diff))
+                move_car(0, w)
+                print(f"[STATE 2] Girando proporcional ({math.degrees(diff):.1f}°), w={w:.2f}")
+
+
+    Frequency.tick()
+```
